@@ -1,12 +1,9 @@
-import 'dart:html';
 import 'dart:io';
 import 'dart:ui';
-import 'dart:html';
-
 import 'package:contatos/helpers/database_helper.dart';
 import 'package:contatos/models/contatos.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,14 +21,16 @@ void initState(){
   super.initState();
 
  
-//Contato c = Contato(1,"Maria","maria@oul.com.br,teste.jpg");
+//Contato c = Contato(1,"Maria","maria@oul.com.br");
 //db.insertContato(c);
-//Contato c1 = Contato(2,"Pedro","pedro@oul.com.br","teste2.jpg");
+//Contato c1 = Contato(2,"Pedro","pedro@oul.com.br");
 //db.insertContato(c1);
+Contato c2 = Contato(3,"Shaiene","pedro@oul.com.br");
+db.insertContato(c2);
 
-//db.getContatos().then( (lista){
-  //print(lista);
-//});
+db.getContatos().then( (lista){
+  print(lista);
+});
 
 db.getContatos().then((lista){
   setState(() {
