@@ -40,7 +40,7 @@ Future<Database> get database async{
     
      Future<Database>initializeDatabase() async{
        Directory directory = await getApplicationDocumentsDirectory();
-       String path = directory.path + 'contatos.db';
+       String path = directory.path + 'agendaDB.db';
      
      var contatosDatabase = await openDatabase(path,version:1, onCreate: _createDb);
      return contatosDatabase;

@@ -4,6 +4,8 @@ import 'package:contatos/helpers/database_helper.dart';
 import 'package:contatos/models/contatos.dart';
 import 'package:flutter/material.dart';
 
+import 'contato_page.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,25 +23,24 @@ void initState(){
   super.initState();
 
  
-//Contato c = Contato(1,"Maria","maria@oul.com.br");
+//Contato c = Contato(1,"Maria","maria@oul.com.br",null);
 //db.insertContato(c);
-//Contato c1 = Contato(2,"Pedro","pedro@oul.com.br");
+//Contato c1 = Contato(2,"Pedro","pedro@oul.com.br",null);
 //db.insertContato(c1);
-Contato c2 = Contato(3,"Shaiene","pedro@oul.com.br");
-db.insertContato(c2);
+//Contato c2 = Contato(3,"Shaiene","pedro@oul.com.br");
+//db.insertContato(c2);
 
-db.getContatos().then( (lista){
-  print(lista);
-});
 
-db.getContatos().then((lista){
-  setState(() {
-   contatos = lista; 
-  });
-});
-
+_exibeTodosContatos();
 }
 
+void _exibeTodosContatos(){
+  db.getContatos().then((lista)
+  {setState(() {
+    contatos = lista;
+  });
+});
+}
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,9 @@ db.getContatos().then((lista){
       ),
       backgroundColor:  Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _exibeContatoPage();
+        },
         child: Icon(Icons.add),
       ),
       body: ListView.builder(
@@ -100,11 +103,34 @@ db.getContatos().then((lista){
                     )
                   )
                 ) ,
+                onTap: (){
+                  _exibeContatoPage(contato: contatos[index]);
+                },
                 );
                 
               }
 
 
+
+void _exibeContatoPage({Contato contato}) async
+{
+  final contatoRecebido = await Navigator.push(context, 
+  MaterialPageRoute(
+    builder: (
+    context)=> ContatoPage(contato:contato)
+  ),
+  );
+
+  if(contatoRecebido != null){
+    if(contato != null)
+    {
+      db.updateContato(contatoRecebido);
+    }else{
+      await db.insertContato(contatoRecebido);
+    }
+    _exibeTodosContatos();
+  }
+}
 
 
 

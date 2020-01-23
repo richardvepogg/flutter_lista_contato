@@ -4,7 +4,7 @@ class Contato{
   String email;
   String imagem;
 
-  Contato(this.id, this.nome, this.email);
+  Contato(this.id, this.nome, this.email, param3);
 
 Map<String,dynamic> toMap(){
 
@@ -21,6 +21,7 @@ Contato.fromMap(Map<String,dynamic> map){
   id = map['id'];
   nome = map['nome'];
   email = map['email'];
+  imagem = map['imagem'];
 }
 
 @override
