@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:contatos/models/contatos.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class  ContatoPage extends StatefulWidget {
 
@@ -75,6 +76,14 @@ Contato _editaContato;
                   )
                 ),
               ),
+              onTap:(){
+                ImagePicker.pickImage(source: ImageSource.gallery).then((file){
+                        if(file==null) return;
+                        setState(() {
+                          _editaContato.imagem = file.path;
+                        });
+                });
+              },
             ),
             TextField(
               controller: _nomeController,

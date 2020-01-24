@@ -73,6 +73,7 @@ void _exibeTodosContatos(){
                   child : Card(
                     child : Padding(padding: EdgeInsets.all(10.0),
                     child : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Container(
                           width: 70.0, height: 70.0,
@@ -98,6 +99,12 @@ void _exibeTodosContatos(){
                               )
                             ],
                           )
+                        ),
+                        IconButton(
+                          icon:  Icon(Icons.delete),
+                          onPressed: (){
+                            _confirmaExclusao(context,contatos[index].id,index);
+                          },
                         )
                       ],
                     )
@@ -132,6 +139,38 @@ void _exibeContatoPage({Contato contato}) async
   }
 }
 
+
+void _confirmaExclusao(BuildContext context, int contatoid, index)
+{
+showDialog(
+  context: context,
+  builder: (BuildContext context){
+    return AlertDialog(
+      title: Text("Excluir Contato"),
+      content: Text("Confirma a exclusão do Contato"),
+      actions: <Widget>[
+FlatButton(
+  child: Text("Cancelar"),
+  onPressed: (){
+    Navigator.of(context).pop();
+  },
+),
+FlatButton(
+  child : Text("Excluir"),
+  onPressed: (){
+    setState(() {
+      contatos.removeAt(index);
+      db.deleteContato(contatoid);
+    });
+    Navigator.of(context).pop();
+  },
+)
+      ],
+    );
+  }
+);
+
+}
 
 
 
